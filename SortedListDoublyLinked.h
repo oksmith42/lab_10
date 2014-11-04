@@ -1,7 +1,10 @@
+#if !defined (SORTEDLISTDOUBLYLINKED_H)
+#define SORTEDLISTDOUBLYLINKED_H
 #include "ListDoublyLinkedIterator.h"
 #include "Text.h"
 using CSC2110::String;
-
+#include <iostream>
+using namespace std;
 template < class T >
 class SortedListDoublyLinked
 {
@@ -15,8 +18,8 @@ class SortedListDoublyLinked
       DoubleNode<T>* locateNodeRemove(String* sk);
       DoubleNode<T>* locateNodeAdd(T* item);
 
-      DoubleNode<T>* addDN(T* item);
-      T* remove(DoubleNode<T>* curr);
+    //  DoubleNode<T>* addDN(T* item);
+    //  T* remove(DoubleNode<T>* curr);
 
       DoubleNode<T>* findHead();
       DoubleNode<T>* findTail();
@@ -27,6 +30,9 @@ class SortedListDoublyLinked
    public:
       SortedListDoublyLinked(int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item));
       ~SortedListDoublyLinked();
+	  
+	  DoubleNode<T>* addDN(T* item);
+      T* remove(DoubleNode<T>* curr);
 
       bool isEmpty();
       int size();
@@ -38,7 +44,7 @@ class SortedListDoublyLinked
 
       ListDoublyLinkedIterator<T>* iterator();
 
-};
+ };
 
 template < class T >
 SortedListDoublyLinked<T>::SortedListDoublyLinked(int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item)) 
@@ -68,34 +74,35 @@ void SortedListDoublyLinked<T>::remove(String* sk)
 template < class T >
 T* SortedListDoublyLinked<T>::remove(DoubleNode<T>* curr)
 {
-
    //DO THIS (prev == NULL / after == NULL are special cases)
    //remember to set loc
-
-   T* item;
-
-   DoubleNode<T>* prev;
-   DoubleNode<T>* after;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   sze--;
-   delete curr;
-   return item;
+	T* item = curr->getItem();
+	DoubleNode<T>* prev = curr->getPrev();
+	DoubleNode<T>* after = curr->getNext();
+	if(sze == 1)
+	{
+		loc = NULL;
+	}
+	else if(prev == NULL)
+	{	
+		after->setPrev(prev);
+		loc = after;
+	}
+	else if(after == NULL)
+	{
+		prev->setNext(after);
+		loc = prev;
+	}
+	else
+	{
+		prev->setNext(after);
+		after->setPrev(prev);
+		loc = prev;
+	}
+	sze--;
+	delete curr;
+	return item;
 }
-
 template < class T >
 bool SortedListDoublyLinked<T>::isEmpty() 
 {

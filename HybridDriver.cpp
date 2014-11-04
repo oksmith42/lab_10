@@ -43,7 +43,7 @@ int main()
 
    Hybrid<CD>* h = new Hybrid<CD>(&CD::compare_items, &CD::compare_keys);
    addCDs(cds, h);
-
+	cout<<"Add display"<<endl;
    ListDoublyLinkedIterator<CD>* iter = h->iterator();
    while(iter->hasNext())
    {
@@ -51,7 +51,7 @@ int main()
       cd->displayCD();
    }
    delete iter;
-
+	cout<<"Remove display"<<endl;
    while(!(h->isEmpty()))
    {
       CD* cd = h->dequeue();
